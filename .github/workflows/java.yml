@@ -84,6 +84,10 @@ jobs:
             scala: 2.12.15
             jdk: '11'
             skipTests: ''
+          - spark: 3.5.8
+            scala: 2.12.15
+            jdk: '17'
+            flinkVersion: 2.2.1
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -105,6 +109,7 @@ jobs:
           SPARK_VERSION: ${{ matrix.spark }}
           SCALA_VERSION: ${{ matrix.scala }}
           SKIP_TESTS: ${{ matrix.skipTests }}
+          FLINK_VERSION: ${{ matrix.flinkVersion }}
         run: |
           SPARK_COMPAT_VERSION=${SPARK_VERSION:0:3}
 
@@ -113,7 +118,13 @@ jobs:
               export SPARK_HOME=$(python -c "import pyspark; print(pyspark.__path__[0])")
           fi
 
-          mvn -q clean install -Dspark=${SPARK_COMPAT_VERSION} -Dscala=${SCALA_VERSION:0:4} -Dspark.version=${SPARK_VERSION} ${SKIP_TESTS}
+          FLINK_ARGS=""
+          if [[ -n "${FLINK_VERSION}" ]]; then
+              FLINK_COMPAT_VERSION=${FLINK_VERSION:0:3}
+              FLINK_ARGS="-Dflink=${FLINK_COMPAT_VERSION} -Dflink.version=${FLINK_VERSION}"
+          fi
+
+          mvn -q clean install -Dspark=${SPARK_COMPAT_VERSION} -Dscala=${SCALA_VERSION:0:4} -Dspark.version=${SPARK_VERSION} ${FLINK_ARGS} ${SKIP_TESTS}
       - run: mkdir staging
       - run: cp spark-shaded/target/sedona-*.jar staging
       - run: |
