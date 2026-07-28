@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         maven \
         ca-certificates \
+        libxext6 \
+        libxrender1 \
+        libxtst6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Optional local corporate/network TLS-inspection root CAs (not committed — see
@@ -29,3 +32,9 @@ RUN for f in /usr/local/share/ca-certificates/extra/*.crt; do \
             -keystore "$JAVA_HOME/lib/security/cacerts" \
             -storepass changeit; \
     done
+
+# Node.js (VS Code Server, extension marketplace calls, any npm-based tooling) bundles its
+# own CA list and ignores the OS/JDK trust stores above unless told otherwise — same corporate
+# root CAs need to be handed to it explicitly via NODE_EXTRA_CA_CERTS as one combined PEM file.
+RUN cat /usr/local/share/ca-certificates/extra/*.crt > /usr/local/share/ca-certificates/extra-bundle.pem 2>/dev/null || true
+ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/extra-bundle.pem
