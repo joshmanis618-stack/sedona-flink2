@@ -1,5 +1,11 @@
 FROM mcr.microsoft.com/devcontainers/java:1-17-bullseye
 
+# The base image ships an apt source for dl.yarnpkg.com whose baked-in keyring
+# no longer matches the repo's current signing key, so `apt-get update` fails
+# outright (NO_PUBKEY) before it ever gets to the packages below. We don't need
+# Yarn here, so drop the source instead of chasing the new key.
+RUN rm -f /etc/apt/sources.list.d/yarn.list
+
 # Sedona 1.9 targets Java 11 bytecode; Flink 2.x requires Java 11/17/21 at runtime.
 # JDK 17 as the build/toolchain JDK satisfies both.
 RUN apt-get update && apt-get install -y --no-install-recommends \

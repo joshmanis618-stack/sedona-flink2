@@ -104,6 +104,7 @@
 
         <!-- For JDK-17 test -->
         <extraJavaTestArgs>
+            -Djava.awt.headless=true
             -XX:+IgnoreUnrecognizedVMOptions
             --add-opens=java.base/java.lang=ALL-UNNAMED
             --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
