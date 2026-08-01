@@ -32,7 +32,7 @@ repos:
         name: run check hooks apply
         description: check that all the hooks apply to the repository
   - repo: https://github.com/thlorenz/doctoc.git
-    rev: v2.3.0
+    rev: v2.5.0
     hooks:
       - id: doctoc
         name: add TOC for Markdown files
@@ -315,20 +315,20 @@ repos:
         description: a tool (and pre-commit hook) to automatically upgrade syntax for newer versions of the language
         args: [--py37-plus]
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.3.1
+    rev: 26.5.1
     hooks:
       - id: black-jupyter
         name: run black-jupyter
         description: format Python files and Jupyter Notebooks with black
   - repo: https://github.com/pypa/pip-audit
-    rev: v2.10.0
+    rev: v2.10.1
     hooks:
       - id: pip-audit
         name: run pip-audit
         description: audits Python environments, requirements files and dependency trees for known security vulnerabilities, and can automatically fix them
         args: ['.']
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v22.1.1
+    rev: v22.1.8
     hooks:
       - id: clang-format
         name: run clang-format
@@ -344,7 +344,7 @@ repos:
         args: ['-c=pyproject.toml', '-r']
         additional_dependencies: ['bandit[toml]']
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.2
+    rev: v2.4.3
     hooks:
       - id: codespell
         name: run codespell
@@ -356,7 +356,7 @@ repos:
         name: run gitleaks
         description: check for secrets with gitleaks
   - repo: https://github.com/zizmorcore/zizmor-pre-commit
-    rev: v1.23.1
+    rev: v1.28.0
     hooks:
       - id: zizmor
         name: run zizmor
@@ -492,7 +492,7 @@ repos:
         args: [--markdown-linebreak-ext=md]
         exclude: ^docs-overrides/main\.html$|\.Rd$
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.48.0
+    rev: v0.49.1
     hooks:
       - id: markdownlint
         name: run markdownlint
@@ -518,7 +518,7 @@ repos:
         types: [yaml]
         files: \.ya?ml$
   - repo: https://github.com/oxipng/oxipng
-    rev: v10.1.0
+    rev: v10.1.1
     hooks:
       - id: oxipng
         name: run oxipng
@@ -531,7 +531,7 @@ repos:
       - id: blacken-docs
         name: run blacken-docs
         description: run `black` on python code blocks in documentation files
-        additional_dependencies: [black==26.3.1]
+        additional_dependencies: [black==26.5.1]
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
     rev: 3.6.1
     hooks:
@@ -541,7 +541,7 @@ repos:
         exclude: ^docs/image/.*$|^R/man/.*\.Rd$|^spark/common/src/test/resources/.*$
         alias: ec
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.11
+    rev: v1.7.12
     hooks:
       - id: actionlint
         name: run actionlint
